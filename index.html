@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flixeres — Lua Coder × Network Engineer</title>
     <style>
+        /* Сброс стилей и базовые настройки */
         * {
             margin: 0;
             padding: 0;
@@ -12,120 +13,156 @@
         }
 
         body {
-            background-color: #0a0a0a;
-            font-family: 'Courier New', 'Fira Code', monospace;
+            background-color: #050505;
+            font-family: 'Fira Code', 'Courier New', monospace;
             color: #00ff41;
             line-height: 1.6;
             padding: 2rem;
+            /* Фоновый градиент для эффекта глубины */
+            background-image: radial-gradient(circle at 10% 20%, rgba(0, 255, 65, 0.03) 0%, #050505 90%);
+            min-height: 100vh;
         }
 
+        /* Контейнер с эффектом "стекла" */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background: rgba(0, 0, 0, 0.85);
-            border-radius: 20px;
+            background: rgba(10, 10, 10, 0.75);
+            backdrop-filter: blur(4px);
+            border-radius: 32px;
             padding: 2rem;
-            border: 1px solid #00ff4133;
-            box-shadow: 0 0 30px rgba(0, 255, 65, 0.1);
+            border: 1px solid rgba(0, 255, 65, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 255, 65, 0.1);
+            transition: all 0.3s ease;
         }
 
-        /* Зелёное свечение для заголовков */
+        /* Анимация появления элементов при скролле */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Заголовки */
         h1, h2, h3 {
             color: #00ff41;
             text-shadow: 0 0 5px #00ff41;
-            margin-top: 1.5rem;
-            margin-bottom: 1rem;
+            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
         }
-
         h1 {
-            font-size: 2rem;
+            font-size: 1.8rem;
             text-align: center;
             border-bottom: 2px solid #00ff4133;
             display: inline-block;
             padding-bottom: 0.5rem;
+            margin-top: 1rem;
+        }
+        h2 {
+            font-size: 1.8rem;
+            border-left: 4px solid #00ff41;
+            padding-left: 1rem;
         }
 
-        /* Стили для таблиц */
+        /* Таблицы в стиле киберпанк */
         table {
             width: 100%;
             border-collapse: collapse;
             margin: 1.5rem 0;
-            background: #0a0a0a;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 12px;
+            overflow: hidden;
         }
-
         th, td {
             border: 1px solid #00ff4133;
-            padding: 0.75rem;
+            padding: 0.8rem;
             text-align: left;
         }
-
         th {
-            background: #00ff4122;
+            background: #00ff4110;
             color: #00ff41;
-            text-shadow: 0 0 3px #00ff41;
+            font-weight: bold;
         }
-
         td {
-            color: #cccccc;
+            color: #b3ffcf;
         }
 
-        /* Ссылки */
+        /* Стили для ссылок */
         a {
             color: #00ff41;
             text-decoration: none;
-            border-bottom: 1px dashed #00ff4133;
             transition: 0.3s;
+            border-bottom: 1px dashed #00ff41;
         }
-
         a:hover {
             color: #ffffff;
-            border-bottom-color: #00ff41;
-            text-shadow: 0 0 5px #00ff41;
+            text-shadow: 0 0 8px #00ff41;
+            border-bottom-style: solid;
         }
 
-        /* Бейджи */
+        /* Контейнер для бейджей */
         .badge-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
+            gap: 0.8rem;
             justify-content: center;
-            margin: 1rem 0;
+            margin: 1.5rem 0;
         }
-
         .badge {
-            display: inline-block;
             background: #0a0a0a;
-            padding: 0.3rem 0.9rem;
-            border-radius: 40px;
-            font-size: 0.8rem;
+            padding: 0.4rem 1rem;
+            border-radius: 60px;
+            font-size: 0.85rem;
             font-weight: bold;
             color: #00ff41;
             border: 1px solid #00ff41;
             font-family: monospace;
+            transition: 0.2s;
+        }
+        .badge:hover {
+            background: #00ff4120;
+            transform: translateY(-2px);
+            box-shadow: 0 0 10px #00ff41;
         }
 
-        /* Блоки с проектами */
+        /* Сетка карточек проектов */
         .project-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1rem;
-            margin: 1.5rem 0;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
         }
-
         .project-card {
-            background: #0a0a0a;
+            background: rgba(10, 20, 10, 0.6);
+            backdrop-filter: blur(4px);
             border: 1px solid #00ff4133;
-            border-radius: 12px;
-            padding: 1rem;
+            border-radius: 20px;
+            padding: 1.3rem;
             transition: 0.3s;
         }
-
         .project-card:hover {
             border-color: #00ff41;
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 255, 65, 0.2);
+            background: rgba(0, 30, 0, 0.7);
+        }
+        .project-card strong {
+            font-size: 1.2rem;
+            color: #00ff41;
+        }
+        .project-card em {
+            font-size: 0.85rem;
+            color: #88ffaa;
+            display: block;
+            margin-top: 0.5rem;
         }
 
-        /* Статистика */
+        /* Блок статистики */
         .stats {
             display: flex;
             flex-wrap: wrap;
@@ -133,12 +170,13 @@
             gap: 2rem;
             margin: 2rem 0;
         }
-
         .stats img {
             max-width: 100%;
             height: auto;
-            border-radius: 12px;
-            border: 1px solid #00ff4133;
+            border-radius: 16px;
+            border: 1px solid #00ff4166;
+            background: #0a0a0a;
+            padding: 0.5rem;
         }
 
         /* Цитата */
@@ -146,18 +184,33 @@
             text-align: center;
             font-style: italic;
             margin: 2rem 0;
-            padding: 1rem;
+            padding: 1.5rem;
             border-left: 4px solid #00ff41;
             background: #00ff4105;
-            color: #cccccc;
+            color: #ccffdd;
+            font-size: 1.1rem;
         }
 
         /* Разделитель */
         hr {
             border: none;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #00ff41, transparent);
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ff41, #00ff41, transparent);
             margin: 2rem 0;
+        }
+
+        /* Дисклеймер и счётчик */
+        .disclaimer {
+            font-size: 0.8rem;
+            color: #88ffaa;
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #00ff4133;
+        }
+        .visitor-badge {
+            text-align: center;
+            margin: 1rem 0;
         }
 
         /* Адаптивность */
@@ -172,41 +225,68 @@
                 font-size: 0.7rem;
                 overflow-x: auto;
             }
+            h2 {
+                font-size: 1.4rem;
+            }
         }
 
-        /* ASCII-арт */
-        pre {
-            color: #00ff41;
-            text-shadow: 0 0 5px #00ff41;
-            font-family: monospace;
+        /* Анимация для печатающегося текста */
+        .typed-text {
+            min-height: 3em;
             text-align: center;
-            overflow-x: auto;
-        }
-
-        /* Дисклеймер */
-        .disclaimer {
-            font-size: 0.8rem;
-            color: #666;
-            text-align: center;
-            margin-top: 2rem;
-            padding-top: 1rem;
-            border-top: 1px solid #00ff4133;
-        }
-
-        /* Счётчик гостей */
-        .visitor-badge {
-            text-align: center;
+            font-size: 1.2rem;
             margin: 1rem 0;
+        }
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            margin-left: 2px;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Анимация для фоновых звёзд */
+        .star {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .star span {
+            position: absolute;
+            background-color: #00ff41;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: floatStar 8s infinite linear;
+        }
+        @keyframes floatStar {
+            from {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(-10vh) scale(1);
+                opacity: 0.6;
+            }
         }
     </style>
 </head>
 <body>
 
+<!-- Фоновые звёзды (генерируются через JS) -->
+<div class="star" id="stars"></div>
+
 <div class="container">
     
-    <!-- ASCII ART -->
+    <!-- ASCII ART (оставлен без изменений) -->
     <div align="center">
-        <pre style="color: #00ff41; text-shadow: 0 0 5px #00ff41;">
+        <pre style="color: #00ff41; text-shadow: 0 0 5px #00ff41; font-size: 0.75rem; line-height: 1.2;">
   ██╗     ██╗   ██╗ █████╗      ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗
   ██║     ██║   ██║██╔══██╗     ████╗  ██║██╔════╝╚══██╔══╝██║    ██║██╔═══██╗██╔══██╗██║ ██╔╝
   ██║     ██║   ██║███████║     ██╔██╗ ██║█████╗     ██║   ██║ █╗ ██║██║   ██║██████╔╝█████╔╝ 
@@ -216,30 +296,34 @@
         </pre>
 
         <h1>🧬 Lua Coder × Network Engineer | Game Hacking + Automate Everything</h1>
-        <p><em>«Я поднимаю BGP и делаю ESP — иногда одновременно»</em></p>
+        
+        <!-- Эффект печатающегося текста для слогана -->
+        <div class="typed-text" id="typedSlogan"></div>
     </div>
 
     <hr>
 
+    <!-- ВСЕ НИЖЕСЛЕДУЮЩИЕ БЛОКИ АДАПТИРОВАНЫ ПОД ВАШ КОНТЕНТ, НО С ДОБАВЛЕНИЕМ АНИМАЦИЙ -->
+
     <!-- Таблица навыков -->
-    <h2>🧠 Fullstack-сетевой Lua-скриптер</h2>
-    <table>
-        <thead>
-            <tr><th>Иконка</th><th>Направление</th><th>Технологии</th></tr>
-        </thead>
-        <tbody>
-            <tr><td>🎮</td><td><strong>Game Hacking (Lua)</strong></td><td>Roblox (Luau), FiveM, GMod, MTA, CS2, экзекьюторы (Krnl/Synapse/Solara), Byfron-обход</td></tr>
-            <tr><td>🌐</td><td><strong>Сетевая инженерия</strong></td><td>Cisco (IOS/NX-OS), MikroTik RouterOS, OSPF/BGP/MPLS, VLAN/VXLAN, EVPN, Fortinet</td></tr>
-            <tr><td>🤖</td><td><strong>Автоматизация</strong></td><td>Python + Netmiko, Ansible, NAPALM, Jinja2, REST API (MikroTik), Paramiko</td></tr>
-            <tr><td>🛠️</td><td><strong>Инструменты</strong></td><td>GNS3/EVE-NG, Wireshark, Prometheus+Grafana, Oxidized, Git + GitHub Actions</td></tr>
-            <tr><td>🔧</td><td><strong>Low-level</strong></td><td>Ассемблер (для хуков), C++ (для Lua-экзекьюторов), Cheat Engine + Lua-скрипты, VS Code</td></tr>
-            <tr><td>🐧</td><td><strong>Linux</strong></td><td>Bash, Systemd, Docker, iptables/nftables, cron, SSH-туннели</td></tr>
-        </tbody>
-    </table>
+    <h2 class="fade-up">🧠 Fullstack-сетевой Lua-скриптер</h2>
+    <div class="fade-up">
+        <table>
+            <thead><tr><th>Иконка</th><th>Направление</th><th>Технологии</th></tr></thead>
+            <tbody>
+                <tr><td>🎮</td><td><strong>Game Hacking (Lua)</strong></td><td>Roblox (Luau), FiveM, GMod, MTA, CS2, экзекьюторы (Krnl/Synapse/Solara), Byfron-обход</td></tr>
+                <tr><td>🌐</td><td><strong>Сетевая инженерия</strong></td><td>Cisco (IOS/NX-OS), MikroTik RouterOS, OSPF/BGP/MPLS, VLAN/VXLAN, EVPN, Fortinet</td></tr>
+                <tr><td>🤖</td><td><strong>Автоматизация</strong></td><td>Python + Netmiko, Ansible, NAPALM, Jinja2, REST API (MikroTik), Paramiko</td></tr>
+                <tr><td>🛠️</td><td><strong>Инструменты</strong></td><td>GNS3/EVE-NG, Wireshark, Prometheus+Grafana, Oxidized, Git + GitHub Actions</td></tr>
+                <tr><td>🔧</td><td><strong>Low-level</strong></td><td>Ассемблер (для хуков), C++ (для Lua-экзекьюторов), Cheat Engine + Lua-скрипты, VS Code</td></tr>
+                <tr><td>🐧</td><td><strong>Linux</strong></td><td>Bash, Systemd, Docker, iptables/nftables, cron, SSH-туннели</td></tr>
+            </tbody>
+        </table>
+    </div>
 
     <!-- Стек технологий (бейджи) -->
-    <h2>🛠️ Мой стек (два в одном)</h2>
-    <div align="center">
+    <h2 class="fade-up">🛠️ Мой стек (два в одном)</h2>
+    <div align="center" class="fade-up">
         <p><strong>Game Hacking / Lua</strong></p>
         <div class="badge-container">
             <span class="badge">Lua</span>
@@ -257,9 +341,9 @@
         </div>
     </div>
 
-    <!-- Проекты -->
-    <h2>📂 Проекты (гибридные)</h2>
-    <div class="project-grid">
+    <!-- Проекты (сетка) -->
+    <h2 class="fade-up">📂 Проекты (гибридные)</h2>
+    <div class="project-grid fade-up">
         <div class="project-card"><strong>🧙 Lua2Net</strong><br>Экзекьютор отправляет telemetry через HTTP на твой сервер<br><em>Lua + Python + FastAPI</em></div>
         <div class="project-card"><strong>🔌 MikroLua</strong><br>Скрипты для MikroTik через Lua (RouterOS встроенный Lua)<br><em>Lua + RouterOS CLI</em></div>
         <div class="project-card"><strong>📡 NetBackup</strong><br>Автоматический бэкап конфигов роутеров в Git + Telegram-бот<br><em>Python + Netmiko + Aiogram</em></div>
@@ -267,31 +351,33 @@
         <div class="project-card"><strong>🧪 EVE-NG + Roblox</strong><br>Эмуляция сети из 5 роутеров + Lua-экзекьютор в изолированной VM<br><em>EVE-NG + Python + VMware</em></div>
         <div class="project-card"><strong>🔐 Lua Obfuscator API</strong><br>HTTP API для обфускации Lua-скриптов на Cisco CSR1000v в Docker<br><em>Lua + Python + Flask + Docker + Cisco</em></div>
     </div>
-    <p align="center"><em>🔗 Ссылки добавлю, когда залью проекты (в процессе)</em></p>
+    <p align="center" class="fade-up"><em>🔗 Ссылки добавлю, когда залью проекты (в процессе)</em></p>
 
     <!-- Таблица "Чем могу быть полезен" -->
-    <h2>🎯 Чем могу быть полезен</h2>
-    <table>
-        <thead><tr><th>Если ты...</th><th>Я могу</th></tr></thead>
-        <tbody>
-            <tr><td>...делаешь читы</td><td>написать сложный UI/ESP/Aimbot на Lua под твой экзекьютор</td></tr>
-            <tr><td>...админишь сервер (MikroTik/Cisco)</td><td>автоматизировать бэкапы, мониторинг, деплой конфигов через Git</td></tr>
-            <tr><td>...игровой проект</td><td>поднять серверную инфраструктуру (VPN, балансировку, DDoS-защиту через BGP)</td></tr>
-            <tr><td>...разрабатываешь экзекьютор</td><td>помочь с LuaC байткодом, хуками на luaL_loadstring, обфускацией</td></tr>
-            <tr><td>...хочешь необычное</td><td>написать Lua-скрипт, который по SNMP дёргает состояние порта и рисует на экране</td></tr>
-        </tbody>
-    </table>
-
-    <!-- Статистика GitHub -->
-    <h2>📈 Статистика</h2>
-    <div align="center" class="stats">
-        <img src="https://github-readme-stats.vercel.app/api?username=Flixeres&show_icons=true&theme=dark&hide_border=true&bg_color=0a0a0a&title_color=00ff41&icon_color=00ff41&text_color=00ff41" />
-        <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Flixeres&layout=compact&theme=dark&hide_border=true&bg_color=0a0a0a&title_color=00ff41&text_color=00ff41&langs_count=8" />
+    <h2 class="fade-up">🎯 Чем могу быть полезен</h2>
+    <div class="fade-up">
+        <table>
+            <thead><tr><th>Если ты...</th><th>Я могу</th></tr></thead>
+            <tbody>
+                <tr><td>...делаешь читы</td><td>написать сложный UI/ESP/Aimbot на Lua под твой экзекьютор</td></tr>
+                <tr><td>...админишь сервер (MikroTik/Cisco)</td><td>автоматизировать бэкапы, мониторинг, деплой конфигов через Git</td></tr>
+                <tr><td>...игровой проект</td><td>поднять серверную инфраструктуру (VPN, балансировку, DDoS-защиту через BGP)</td></tr>
+                <tr><td>...разрабатываешь экзекьютор</td><td>помочь с LuaC байткодом, хуками на luaL_loadstring, обфускацией</td></tr>
+                <tr><td>...хочешь необычное</td><td>написать Lua-скрипт, который по SNMP дёргает состояние порта и рисует на экране</td></tr>
+            </tbody>
+        </table>
     </div>
 
-    <!-- Ссылки на соцсети -->
-    <h2>📬 Где найти</h2>
-    <div align="center" class="badge-container">
+    <!-- Статистика GitHub -->
+    <h2 class="fade-up">📈 Статистика</h2>
+    <div align="center" class="stats fade-up">
+        <img src="https://github-readme-stats.vercel.app/api?username=Flixeres&show_icons=true&theme=dark&hide_border=true&bg_color=0a0a0a&title_color=00ff41&icon_color=00ff41&text_color=00ff41" alt="GitHub Stats" />
+        <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Flixeres&layout=compact&theme=dark&hide_border=true&bg_color=0a0a0a&title_color=00ff41&text_color=00ff41&langs_count=8" alt="Top Languages" />
+    </div>
+
+    <!-- Социальные сети и контакты -->
+    <h2 class="fade-up">📬 Где найти</h2>
+    <div align="center" class="badge-container fade-up">
         <a href="https://discord.gg/flixeres" class="badge" style="text-decoration: none;">💬 Discord</a>
         <a href="https://t.me/Flixeres" class="badge" style="text-decoration: none;">📡 Telegram</a>
         <a href="https://youtube.com/@FlixeresHVH" class="badge" style="text-decoration: none;">🎥 YouTube</a>
@@ -299,29 +385,76 @@
     </div>
 
     <!-- Сейчас в работе -->
-    <h2>🧪 Сейчас в работе</h2>
-    <ul>
+    <h2 class="fade-up">🧪 Сейчас в работе</h2>
+    <ul class="fade-up">
         <li>🔄 <strong>NetLua Framework</strong> — универсальный фреймворк для Lua-скриптов под экзекьюторы и для MikroTik</li>
         <li>🛡️ <strong>DDoS-Filter via BGP + Lua</strong> — автоматическая подстановка blackhole-маршрутов через скрипт</li>
         <li>📦 <strong>Docker-образ</strong> для быстрого развёртывания сервера Lua-обфускатора</li>
     </ul>
 
     <!-- Цитата и дисклеймер -->
-    <div class="quote">
+    <div class="quote fade-up">
         «Если твой BGP-пиринг упал — значит, кто-то забыл написать автотесты на Lua»
     </div>
 
-    <div class="disclaimer">
+    <div class="disclaimer fade-up">
         ⚠️ <strong>Дисклеймер:</strong> Game Hacking — только для образовательных целей и офлайн/собственных серверов.<br>
         Сеть — автоматизирую легально, без вторжений.
     </div>
 
     <!-- Счётчик гостей -->
-    <div class="visitor-badge">
+    <div class="visitor-badge fade-up">
         <img src="https://komarev.com/ghpvc/?username=Flixeres&style=for-the-badge&color=00ff41&label=VISITORS&abbreviated=true" alt="visitors" />
     </div>
 
 </div>
+
+<script>
+    // 1. Анимация появления при скролле
+    const fadeElements = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+    fadeElements.forEach(el => observer.observe(el));
+
+    // 2. Эффект печатающегося текста для слогана
+    const sloganText = "«Я поднимаю BGP и делаю ESP — иногда одновременно»";
+    const typedDiv = document.getElementById("typedSlogan");
+    let i = 0;
+    function typeWriter() {
+        if (i < sloganText.length) {
+            typedDiv.innerHTML += sloganText.charAt(i);
+            i++;
+            setTimeout(typeWriter, 70);
+        } else {
+            typedDiv.innerHTML += '<span class="cursor">_</span>';
+        }
+    }
+    typeWriter();
+
+    // 3. Генерация фоновых звёзд (матричный дождь)
+    function createStars() {
+        const starsContainer = document.getElementById('stars');
+        const starCount = 120;
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('span');
+            const size = Math.random() * 2 + 1;
+            star.style.width = `${size}px`;
+            star.style.height = `${size * 3}px`;
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.animationDuration = `${Math.random() * 5 + 3}s`;
+            star.style.animationDelay = `${Math.random() * 10}s`;
+            star.style.opacity = Math.random() * 0.5;
+            starsContainer.appendChild(star);
+        }
+    }
+    createStars();
+</script>
 
 </body>
 </html>
